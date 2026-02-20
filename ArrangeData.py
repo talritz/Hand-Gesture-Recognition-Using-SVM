@@ -176,7 +176,7 @@ def load_filtered_ninapro_data(base_path, num_subjects=1):
     return pd.DataFrame()
 
 
-def load_cleaned_ninapro_data(base_path, num_subjects=1):
+def load_cleaned_ninapro_data(base_path, subject_list, dataset_type):
     all_data_frames = []
 
     # הגדרת התנועות הרצויות (ללא 0 בשלב זה, נוסיף אותו בלוגיקה)
@@ -186,12 +186,11 @@ def load_cleaned_ninapro_data(base_path, num_subjects=1):
     }
 
     # כמה דגימות למחוק מסביב לכל תנועה לא רצויה?
-    # בתדר 2000Hz, שניה אחת = 2000 דגימות. נלך על טווח ביטחון נדיב.
     margin_samples = 1500
 
-    print(f"Loading {num_subjects} subjects with safety margins...")
+    print(f"Loading subjects {subject_list} for {dataset_type} dataset...")
 
-    for subject in range(1, num_subjects + 1):
+    for subject in subject_list:
         for exercise_id, target_moves in wanted_movements_map.items():
             file_name = f'S{subject}_E{exercise_id}_A1.mat'
             file_path = os.path.join(base_path, file_name)
@@ -204,44 +203,31 @@ def load_cleaned_ninapro_data(base_path, num_subjects=1):
 
                 # חילוץ נתונים
                 emg = mat['emg']
-                restimulus = mat['restimulus'].flatten()  # משטיחים למערך חד מימדי
+                restimulus = mat['restimulus'].flatten()
                 rerepetition = mat['rerepetition'].flatten() if 'rerepetition' in mat else mat['repetition'].flatten()
 
                 # --- שלב הניקוי החכם ---
-
-                # 1. זיהוי איזה דגימות הן "תנועה רצויה"
-                # (משתמשים ב-NumPy כי זה מהיר יותר מ-Pandas בשלב הזה)
                 is_wanted = np.isin(restimulus, target_moves)
-
-                # 2. זיהוי איזה דגימות הן "מנוחה" (Rest)
                 is_rest = (restimulus == 0)
-
-                # 3. כל השאר = תנועות לא רצויות (Bad Movements)
-                # אלו התנועות שאנחנו רוצים למחוק + השוליים שלהן
                 is_bad_movement = ~(is_wanted | is_rest)
 
-                # 4. הרחבת ה"אזור הרע" (Dilation)
-                # אנו יוצרים מסכה שמרחיבה את ה-True של התנועות הרעות ימינה ושמאלה
-                # משתמשים ב-convolve כדי "למרוח" את האזור האסור
                 window_size = margin_samples * 2 + 1
                 kernel = np.ones(window_size, dtype=bool)
-                # המרה ל-int לצורך הקונבולוציה
                 bad_mask_int = is_bad_movement.astype(int)
-                # קונבולוציה: כל מקום שהיה בו 1, ימרח לרוחב החלון
                 expanded_bad_mask = np.convolve(bad_mask_int, kernel, mode='same') > 0
 
-                # 5. המסכה הסופית לשמירה:
-                # נשמור אם זה: (תנועה רצויה) או (מנוחה שלא קרובה לתנועה רעה)
                 keep_mask = is_wanted | (is_rest & ~expanded_bad_mask)
 
                 # --- יצירת הטבלה רק עם הנתונים הטובים ---
-                # ניקח רק את האינדקסים ששרדו את הסינון
                 if np.sum(keep_mask) > 0:
                     df_temp = pd.DataFrame(emg[keep_mask], columns=[f'EMG_{i + 1}' for i in range(emg.shape[1])])
                     df_temp['Restimulus'] = restimulus[keep_mask]
                     df_temp['Rerepetition'] = rerepetition[keep_mask]
                     df_temp['Subject'] = subject
                     df_temp['Exercise'] = exercise_id
+
+                    # התיוג החדש שלנו
+                    df_temp['dataset_type'] = dataset_type
 
                     # אופטימיזציה
                     df_temp = df_temp.astype({'Restimulus': 'int8', 'Rerepetition': 'int8',
@@ -256,7 +242,21 @@ def load_cleaned_ninapro_data(base_path, num_subjects=1):
         return pd.concat(all_data_frames, ignore_index=True)
     return pd.DataFrame()
 
-base_path = r'C:\Users\Tal\OneDrive - Afeka College Of Engineering\הקבצים של Nadav Matza - פרויקט גמר\עיבוד אותות אקראיים\data sets'
+
+# --- הגדרת נתיב דינמית ---
+path1 = r'C:\Users\Tal\OneDrive - Afeka College Of Engineering\הקבצים של Nadav Matza - פרויקט גמר\עיבוד אותות אקראיים\data sets'
+path2 = r'B:\OneDrive - Afeka College Of Engineering\פרויקט גמר\עיבוד אותות אקראיים\data sets'
+path3 = r'C:\OneDrive - Afeka College Of Engineering\פרויקט גמר\עיבוד אותות אקראיים\data sets'
+
+if os.path.exists(path1):
+    base_path = path1
+elif os.path.exists(path2):
+    base_path = path2
+elif os.path.exists(path3):
+    base_path = path3
+else:
+    print("Error: Dataset path not found!")
+    base_path = None
 
 df=load_cleaned_ninapro_data(base_path)
 
