@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="Updated load_cleaned_ninapro_data to get subject list according to test,validation or train groups, and dataset_type to add tag of group to data table.">
-      <change afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_training.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArrangeData.py" beforeDir="false" afterPath="$PROJECT_DIR$/ArrangeData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArrangeData.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loading.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,21 +42,26 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="38TQRBPJSRdBzJgCZuPH8WVFjih" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.ArrangeData.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.ArrangeData.executor": "Run",
+    "Python.feature_extraction.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -86,7 +93,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771607223789</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Improved data extraction phase, added feature extraction functions. ZC and SSC not working yet.">
+      <option name="closed" value="true" />
+      <created>1771692079498</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1771692079498</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,6 +118,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="asd" />
     <MESSAGE value="Updated load_cleaned_ninapro_data to get subject list according to test,validation or train groups, and dataset_type to add tag of group to data table." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated load_cleaned_ninapro_data to get subject list according to test,validation or train groups, and dataset_type to add tag of group to data table." />
+    <MESSAGE value="Improved data extraction phase, added feature extraction functions. ZC and SSC not working yet." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved data extraction phase, added feature extraction functions. ZC and SSC not working yet." />
   </component>
 </project>
