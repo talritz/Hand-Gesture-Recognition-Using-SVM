@@ -1,121 +1,108 @@
 import os
 import time
 from datetime import datetime
+import pandas as pd
 
-# --- Intel CPU Acceleration (Must be called before other sklearn imports!) ---
+# --- Intel CPU Acceleration ---
 from sklearnex import patch_sklearn
-patch_sklearn()
-# -------------------------------------------------------------------------
 
-# Import functions from our custom modules
+patch_sklearn()
+# ------------------------------
+
 from data_loading import load_cleaned_ninapro_data
 from feature_extraction import extract_all_features
 from model_training import evaluate_svm_kernels
 
 
-def format_duration(seconds):
-    """
-    Helper function to format time duration into a readable string (Hours, Minutes, Seconds).
-    """
-    mins, secs = divmod(int(seconds), 60)
-    hours, mins = divmod(mins, 60)
-    if hours > 0:
-        return f"{hours}h {mins}m {secs}s"
-    elif mins > 0:
-        return f"{mins}m {secs}s"
-    else:
-        return f"{secs}s"
-
-
 def main():
-    total_start_time = time.time()
-    print("=" * 50)
-    print(f"PIPELINE STARTED AT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("=" * 50 + "\n")
+    print("=" * 60)
+    print(f"PHASE 1 GRID SEARCH STARTED AT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=" * 60)
 
-    # ---------------------------------------------------------
-    # 1. Dataset Path Configuration
-    # ---------------------------------------------------------
     paths_to_check = [
         r'C:\Users\Tal\OneDrive - Afeka College Of Engineering\הקבצים של Nadav Matza - פרויקט גמר\עיבוד אותות אקראיים\data sets',
         r'B:\OneDrive - Afeka College Of Engineering\פרויקט גמר\עיבוד אותות אקראיים\data sets',
         r'C:\OneDrive - Afeka College Of Engineering\פרויקט גמר\עיבוד אותות אקראיים\data sets'
     ]
 
-    base_path = None
-    for path in paths_to_check:
-        if os.path.exists(path):
-            base_path = path
-            print(f"Dataset found at: {base_path}")
-            break
-
-    if base_path is None:
-        print("Error: Dataset path not found! Please check your directories.")
+    base_path = next((p for p in paths_to_check if os.path.exists(p)), None)
+    if not base_path:
+        print("Error: Dataset path not found!")
         return
 
-    # ---------------------------------------------------------
-    # 2. Subject Splitting Configuration
-    # ---------------------------------------------------------
     train_subjects = [1, 2, 3, 4, 5, 6, 7, 8]
     val_subjects = [9, 10, 11, 12]
-    # test_subjects  = [13, 14, 15, 16, 17, 18, 19, 20]  # Commented out for now
 
-    # ---------------------------------------------------------
-    # 3. Data Loading Pipeline
-    # ---------------------------------------------------------
-    print("\n--- PHASE 1: Loading Raw Data ---")
-    phase1_start_time = time.time()
-    print(f"[Start] Phase 1: {datetime.now().strftime('%H:%M:%S')}")
+    # --- Phase 1: Signal Processing Parameter Space ---
+    margins = [1500, 1000]
+    windows = [200, 400]
+    steps = [50, 100]  # Note: 50 means double the amount of training windows!
+    zc_thresholds = [1e-5, 1e-6, 1e-7]
+    ssc_deltas = [1e-11, 1e-12, 1e-13]
 
-    df_train_raw = load_cleaned_ninapro_data(base_path, train_subjects, 'Train')
-    df_val_raw = load_cleaned_ninapro_data(base_path, val_subjects, 'Validation')
-    # df_test_raw  = load_cleaned_ninapro_data(base_path, test_subjects, 'Test') # Commented out
+    all_results = []
+    total_runs = len(margins) * len(windows) * len(steps) * len(zc_thresholds) * len(ssc_deltas)
+    current_run = 0
 
-    if df_train_raw.empty or df_val_raw.empty:
-        print("Failed to load required training/validation sets. Exiting.")
-        return
+    # 1. Loop over Data Margins
+    for margin in margins:
+        print(f"\n[{datetime.now().strftime('%H:%M:%S')}] >>> LOADING DATA (Margin: {margin}) <<<")
+        df_train_raw = load_cleaned_ninapro_data(base_path, train_subjects, 'Train', margin_samples=margin)
+        df_val_raw = load_cleaned_ninapro_data(base_path, val_subjects, 'Validation', margin_samples=margin)
 
-    phase1_end_time = time.time()
-    print(f"[End] Phase 1: {datetime.now().strftime('%H:%M:%S')}")
-    print(f"[Duration] Phase 1: {format_duration(phase1_end_time - phase1_start_time)}")
+        # 2. Loop over Window Sizes
+        for window in windows:
+            # 3. Loop over Step Sizes
+            for step in steps:
+                # 4. Loop over ZC Thresholds
+                for zc in zc_thresholds:
+                    # 5. Loop over SSC Deltas
+                    for ssc in ssc_deltas:
+                        current_run += 1
+                        print(
+                            f"[{datetime.now().strftime('%H:%M:%S')}] Run {current_run}/{total_runs} | Win:{window}, Step:{step}, ZC:{zc}, SSC:{ssc}")
 
-    # ---------------------------------------------------------
-    # 4. Feature Extraction Pipeline
-    # ---------------------------------------------------------
-    print("\n--- PHASE 2: Extracting Features ---")
-    phase2_start_time = time.time()
-    print(f"[Start] Phase 2: {datetime.now().strftime('%H:%M:%S')}")
+                        # Extract features with specific thresholds
+                        df_train_features = extract_all_features(df_train_raw, window_size=window, step_size=step,
+                                                                 zc_thresh=zc, ssc_delta=ssc)
+                        df_val_features = extract_all_features(df_val_raw, window_size=window, step_size=step,
+                                                               zc_thresh=zc, ssc_delta=ssc)
 
-    df_train_features = extract_all_features(df_train_raw)
-    df_val_features = extract_all_features(df_val_raw)
-    # df_test_features  = extract_all_features(df_test_raw) # Commented out
+                        # Train ONLY Linear SVM to test the feature quality
+                        kernel_results = evaluate_svm_kernels(
+                            df_train_features, df_val_features,
+                            svm_c=1.0,
+                            kernels_to_test=['linear']
+                        )
 
-    phase2_end_time = time.time()
-    print(f"[End] Phase 2: {datetime.now().strftime('%H:%M:%S')}")
-    print(f"[Duration] Phase 2: {format_duration(phase2_end_time - phase2_start_time)}")
+                        # Save metrics
+                        metrics = kernel_results['linear']
+                        all_results.append({
+                            'Margin': margin,
+                            'Window': window,
+                            'Step': step,
+                            'ZC_Thresh': zc,
+                            'SSC_Delta': ssc,
+                            'Macro_F1 (%)': round(metrics['macro_f1'] * 100, 2),
+                            'Balanced_Acc (%)': round(metrics['balanced_accuracy'] * 100, 2)
+                        })
 
-    # ---------------------------------------------------------
-    # 5. Model Training and Evaluation Pipeline
-    # ---------------------------------------------------------
-    print("\n--- PHASE 3: Model Training & Evaluation ---")
-    phase3_start_time = time.time()
-    print(f"[Start] Phase 3: {datetime.now().strftime('%H:%M:%S')}")
+    # --- Print and Save Final Table ---
+    print("\n" + "=" * 60)
+    print("PHASE 1 GRID SEARCH COMPLETED!")
 
-    # Passing only Train and Validation sets
-    results = evaluate_svm_kernels(df_train_features, df_val_features)
+    results_df = pd.DataFrame(all_results)
 
-    phase3_end_time = time.time()
-    print(f"[End] Phase 3: {datetime.now().strftime('%H:%M:%S')}")
-    print(f"[Duration] Phase 3: {format_duration(phase3_end_time - phase3_start_time)}")
+    # Sort by the best Macro F1 score
+    results_df = results_df.sort_values(by='Macro_F1 (%)', ascending=False).reset_index(drop=True)
 
-    # ---------------------------------------------------------
-    # Pipeline Summary
-    # ---------------------------------------------------------
-    total_end_time = time.time()
-    print("\n" + "=" * 50)
-    print(f"PIPELINE COMPLETED AT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"TOTAL RUNTIME: {format_duration(total_end_time - total_start_time)}")
-    print("=" * 50)
+    print("\nTOP 10 RESULTS (Sorted by Best Macro F1):")
+    print(results_df.head(10).to_string())
+
+    csv_filename = 'phase1_signal_processing_results.csv'
+    results_df.to_csv(csv_filename, index=False)
+    print(f"\nFull results saved to '{csv_filename}'")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
