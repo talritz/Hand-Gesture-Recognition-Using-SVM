@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-
 import hyperparameters as hp
 
 def calc_rms(emg_signals):

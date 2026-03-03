@@ -10,14 +10,14 @@ MARGIN_SAMPLES = 1500
 # --- 2. Feature Extraction Parameters ---
 # Window size for feature extraction (in samples).
 # 200 samples at 2kHz = 100ms.
-WINDOW_SIZE = 200
+WINDOW_SIZE = 400
 
 # Step size for the sliding window (in samples).
 # 100 samples = 50ms overlap.
 STEP_SIZE = 100
 
 # Noise threshold for Zero Crossing (ZC)
-ZC_THRESH = 1e-6
+ZC_THRESH = 1e-7
 
 # Noise threshold for Slope Sign Change (SSC)
 SSC_DELTA = 1e-12
