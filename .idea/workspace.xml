@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="WIP - implementing OvO strategy">
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nina_helper.py" afterDir="false" />
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/model_tuning.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/roc_evaluation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visualize_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loading.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hyperparameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/hyperparameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nina_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/nina_helper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,9 +58,14 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.ArrangeData.executor": "Run",
+    "Python.data_loading.executor": "Run",
     "Python.feature_extraction.executor": "Run",
+    "Python.hyperparameters.executor": "Run",
     "Python.main.executor": "Run",
     "Python.model_training.executor": "Run",
+    "Python.model_tuning.executor": "Run",
+    "Python.roc_evaluation.executor": "Run",
+    "Python.visualize_data.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -150,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772531258327</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Changed data loading - now using nina-helper library to load data from data base!">
+      <option name="closed" value="true" />
+      <created>1772554345302</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1772554345302</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,6 +189,7 @@
     <MESSAGE value="test" />
     <MESSAGE value="Added hyperparameters.py." />
     <MESSAGE value="WIP - implementing OvO strategy" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP - implementing OvO strategy" />
+    <MESSAGE value="Changed data loading - now using nina-helper library to load data from data base!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed data loading - now using nina-helper library to load data from data base!" />
   </component>
 </project>

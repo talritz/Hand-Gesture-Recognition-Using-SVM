@@ -1,15 +1,11 @@
+import os
+import numpy as np
+import scipy.io as sio
+
+
 def import_db2(folder_path, subject, rest_length_cap=999):
     """Function for extracting data from raw NinaiPro files for DB2.
     (Modified: Removed E3 block to save RAM and avoid FileNotFoundError)
-
-    Args:
-        folder_path (string): Path to folder containing raw mat files
-        subject (int): 1-40 which subject's data to import
-        rest_length_cap (int, optional): The number of seconds of rest data to keep before/after a movement
-
-    Returns:
-        Dictionary: Raw EMG data, corresponding repetition and movement labels, indices of where repetitions are
-            demarked and the number of repetitions with capped off rest data
     """
     fs = 2000
 
@@ -26,15 +22,13 @@ def import_db2(folder_path, subject, rest_length_cap=999):
     emg = np.vstack((emg, np.array(data['emg'])))
     rep = np.append(rep, np.squeeze(np.array(data['rerepetition'])))
     move_tmp = np.squeeze(np.array(data['restimulus']))
-    move = np.append(move, move_tmp)  # Note no fix needed for this exercise
-
-    # --- (E3 Loading Block Removed) ---
+    move = np.append(move, move_tmp)
 
     move = move.astype('int8')  # To minimise overhead
 
     # Label repetitions using new block style: rest-move-rest regions
     move_regions = np.where(np.diff(move))[0]
-    
+
     # Safety check in case of empty regions
     if len(move_regions) == 0:
         return {'emg': emg, 'rep': rep, 'move': move, 'rep_regions': np.array([]), 'nb_capped': 0}

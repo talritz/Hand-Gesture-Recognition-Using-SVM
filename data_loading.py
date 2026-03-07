@@ -1,66 +1,49 @@
-import os
-import scipy.io
 import pandas as pd
 import numpy as np
-from scipy.ndimage import binary_dilation
-
 import hyperparameters as hp
+import nina_helper
 
-def load_cleaned_ninapro_data(base_path, subject_list, dataset_type, margin_samples=None):
-    # Use global hyperparameter if no specific value is provided
+
+def load_cleaned_ninapro_data(base_path, subject_list, dataset_name='Dataset', margin_samples=None):
     if margin_samples is None:
         margin_samples = hp.MARGIN_SAMPLES
 
-    all_data_frames = []
-    wanted_movements_map = {
-        1: [1, 5, 6, 7, 13, 14, 17],
-        2: [31]
-    }
+    print(f"Loading {dataset_name} using nina_helper (Subjects: {subject_list})...")
 
-    print(f"Loading subjects {subject_list} for '{dataset_type}' dataset (Margin: {margin_samples})...")
+    all_subject_data = []
+    TARGET_CLASSES = [0, 1, 5, 6, 7, 13, 14, 17, 31]
 
-    for subject in subject_list:
-        for exercise_id, target_moves in wanted_movements_map.items():
-            file_name = f'S{subject}_E{exercise_id}_A1.mat'
-            file_path = os.path.join(base_path, file_name)
+    for subj in subject_list:
+        print(f"  -> Extracting Subject {subj} via nina_helper...")
 
-            if not os.path.exists(file_path):
-                continue
+        data_dict = nina_helper.import_db2(base_path, subj)
 
-            try:
-                mat = scipy.io.loadmat(file_path)
-                emg = mat['emg']
-                restimulus = mat['restimulus'].flatten()
+        emg_data = data_dict['emg']
+        move_data = data_dict['move'].flatten()
+        rep_data = data_dict['rep'].flatten()
 
-                if 'rerepetition' in mat:
-                    rerepetition = mat['rerepetition'].flatten()
-                else:
-                    rerepetition = mat['repetition'].flatten()
+        df = pd.DataFrame(emg_data, columns=[f'EMG_{i + 1}' for i in range(emg_data.shape[1])])
+        df['Restimulus'] = move_data
+        df['Rerepetition'] = rep_data
+        df['Subject'] = subj
 
-                is_wanted = np.isin(restimulus, target_moves)
-                is_rest = (restimulus == 0)
-                is_bad_movement = ~(is_wanted | is_rest)
+        df = df[df['Restimulus'].isin(TARGET_CLASSES)].copy()
 
-                expanded_bad_mask = binary_dilation(is_bad_movement, iterations=margin_samples)
-                keep_mask = is_wanted | (is_rest & ~expanded_bad_mask)
+        if margin_samples > 0:
+            df['block_id'] = (df['Restimulus'] != df['Restimulus'].shift()).cumsum()
 
-                if np.sum(keep_mask) > 0:
-                    df_temp = pd.DataFrame(emg[keep_mask], columns=[f'EMG_{i + 1}' for i in range(emg.shape[1])])
-                    df_temp['Restimulus'] = restimulus[keep_mask]
-                    df_temp['Rerepetition'] = rerepetition[keep_mask]
-                    df_temp['Subject'] = subject
-                    df_temp['Exercise'] = exercise_id
-                    df_temp['dataset_type'] = dataset_type
+            def trim_transients(group):
+                if len(group) > 2 * margin_samples:
+                    return group.iloc[margin_samples:-margin_samples]
+                return pd.DataFrame(columns=group.columns)
 
-                    df_temp = df_temp.astype({'Restimulus': 'int8', 'Rerepetition': 'int8',
-                                              'Subject': 'int8', 'Exercise': 'int8'})
-                    all_data_frames.append(df_temp)
+            # include_groups=False automatically drops the 'block_id' column, preventing the KeyError
+            df = df.groupby('block_id', group_keys=False).apply(trim_transients, include_groups=False)
 
-            except Exception as e:
-                print(f"Error loading {file_name}: {e}")
+        all_subject_data.append(df)
 
-    if all_data_frames:
-        final_df = pd.concat(all_data_frames, ignore_index=True)
-        return final_df
+    final_df = pd.concat(all_subject_data, ignore_index=True)
+    final_df['dataset_type'] = dataset_name
 
-    return pd.DataFrame()
+    print(f"Finished loading {dataset_name}. Total valid samples: {len(final_df)}")
+    return final_df

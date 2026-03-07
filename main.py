@@ -10,7 +10,7 @@ patch_sklearn()
 
 from data_loading import load_cleaned_ninapro_data
 from feature_extraction import extract_all_features
-from model_training import evaluate_all_kernels_ovo_test
+from model_training import evaluate_all_kernels_ovo
 import hyperparameters as hp
 
 def format_duration(seconds):
@@ -23,7 +23,7 @@ def format_duration(seconds):
 def main():
     total_start_time = time.time()
     print("=" * 60)
-    print(f"PAPER-ALIGNED VALIDATION EVALUATION STARTED AT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"HYBRID FEATURES OvO EVALUATION STARTED AT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
 
     paths_to_check = [
@@ -37,10 +37,7 @@ def main():
         print("Error: Dataset path not found!")
         return
 
-    # ---------------------------------------------------------
-    # STRICT SPLIT: Train on 1-8, Validate on 9-12.
-    # Subjects 13-20 remain locked in the vault!
-    # ---------------------------------------------------------
+    # Inter-Subject Split: Train on 1-8, Evaluate on 9-12
     train_subjects = [1, 2, 3, 4, 5, 6, 7, 8]
     val_subjects = [9, 10, 11, 12]
 
@@ -48,12 +45,12 @@ def main():
     df_train_raw = load_cleaned_ninapro_data(base_path, train_subjects, 'Train')
     df_val_raw = load_cleaned_ninapro_data(base_path, val_subjects, 'Validation')
 
-    print("\n--- PHASE 2: Extracting Features (Paper-Aligned) ---")
+    print("\n--- PHASE 2: Extracting 6 Hybrid Features ---")
     df_train_features = extract_all_features(df_train_raw)
     df_val_features = extract_all_features(df_val_raw)
 
     print("\n--- PHASE 3: Multi-Kernel Training & VALIDATION Set Evaluation (OvO) ---")
-    results_df = evaluate_all_kernels_ovo_test(df_train_features, df_val_features)
+    results_df = evaluate_all_kernels_ovo(df_train_features, df_val_features)
 
     total_end_time = time.time()
     print("\n" + "=" * 60)
