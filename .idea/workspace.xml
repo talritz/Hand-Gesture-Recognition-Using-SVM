@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/fine_grid_search.py" afterDir="false" />
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="finished fine grid-search tuning for all kernels">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fine_grid_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/fine_grid_search.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,28 +45,30 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.ArrangeData.executor": "Run",
-    "Python.data_loading.executor": "Run",
-    "Python.feature_extraction.executor": "Run",
-    "Python.fine_grid_search.executor": "Run",
-    "Python.hyperparameters.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.model_training.executor": "Run",
-    "Python.model_tuning.executor": "Run",
-    "Python.roc_evaluation.executor": "Run",
-    "Python.visualize_data.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.ArrangeData.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_loading.executor&quot;: &quot;Run&quot;,
+    &quot;Python.feature_extraction.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fine_grid_search.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hyperparameters.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_training.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_tuning.executor&quot;: &quot;Run&quot;,
+    &quot;Python.roc_evaluation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.visualize_data.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM" />
@@ -167,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772916484990</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="finished fine grid-search tuning for all kernels">
+      <option name="closed" value="true" />
+      <created>1773079509245</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1773079509246</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +202,7 @@
     <MESSAGE value="WIP - implementing OvO strategy" />
     <MESSAGE value="Changed data loading - now using nina-helper library to load data from data base!" />
     <MESSAGE value="hyper-parameter grid search" />
-    <option name="LAST_COMMIT_MESSAGE" value="hyper-parameter grid search" />
+    <MESSAGE value="finished fine grid-search tuning for all kernels" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished fine grid-search tuning for all kernels" />
   </component>
 </project>

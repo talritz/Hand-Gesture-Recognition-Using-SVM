@@ -61,21 +61,18 @@ def run_fine_tuning_search():
     # אזור הגדרת רשת ה- Fine-Tuning (רזולוציה גבוהה סביב המנצחים)
     # =====================================================================
     param_grid = {
-        'linear': list(ParameterGrid({
-            'C': [0.5, 0.8, 1.2, 1.5, 2.0, 5.0]
-        })),
         'rbf': list(ParameterGrid({
-            'C': [0.01, 0.05, 0.2, 0.5],
-            'gamma': [0.005, 0.01, 0.02, 0.05]
+            'C': [0.05, 0.1, 0.2],
+            'gamma': ['scale', 'auto', 0.01, 0.02]
         })),
         'poly': list(ParameterGrid({
-            'C': [5.0, 8.0, 12.0, 15.0],
-            'gamma': [0.01, 0.02],
+            'C': [8.0, 10.0, 12.0, 15.0],
+            'gamma': ['auto', 'scale', 0.01],
             'degree': [3]
         })),
         'sigmoid': list(ParameterGrid({
-            'C': [0.05, 0.2, 0.5],
-            'gamma': [0.005, 0.01, 0.02]
+            'C': [0.05, 0.1, 0.2],
+            'gamma': ['scale', 'auto', 0.01]
         }))
     }
     # =====================================================================
@@ -142,7 +139,7 @@ def run_fine_tuning_search():
         drop=True)
     print(full_results_df.to_string())
 
-    csv_filename = "Fine_Tuning_Results.csv"
+    csv_filename = "Fine_Tuning_Results_no_linear.csv"
     full_results_df.to_csv(csv_filename, index=False)
     print(f"\nSaved detailed fine-tuning results to: {csv_filename}")
 
