@@ -1,3 +1,4 @@
+#used libraries:
 import matplotlib.pyplot as plt
 from sklearn.svm import LinearSVC, SVC
 from sklearn.multiclass import OneVsOneClassifier
@@ -5,7 +6,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import precision_recall_fscore_support, confusion_matrix, balanced_accuracy_score, \
     ConfusionMatrixDisplay
 import pandas as pd
-
 import hyperparameters as hp
 
 
@@ -60,9 +60,9 @@ def evaluate_all_kernels_ovo(df_train_features, df_val_features):
         y_val_pred = svm_model.predict(X_val_scaled)
 
         # Metrics Calculation
-        _, _, macro_f1, _ = precision_recall_fscore_support(y_val, y_val_pred, average='macro', zero_division=0)
+        _, _, macro_f1, _ = precision_recall_fscore_support(y_val, y_val_pred, average='macro', zero_division=0)[2]
         bal_acc = balanced_accuracy_score(y_val, y_val_pred)
-        _, per_class_recall, _, _ = precision_recall_fscore_support(y_val, y_val_pred, average=None, zero_division=0)
+        _, per_class_recall, _, _ = precision_recall_fscore_support(y_val, y_val_pred, average=None, zero_division=0)[1]
 
         print(f"    Macro F1: {macro_f1 * 100:.2f}% | Balanced Acc: {bal_acc * 100:.2f}%")
         print("    Per-Class Recall:")

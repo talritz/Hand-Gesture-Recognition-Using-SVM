@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="test">
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="finished fine grid-search tuning for all kernels">
+      <change afterPath="$PROJECT_DIR$/Tuned_after_ROC_J.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tuned_models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/ComEx2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ComEx2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fine_grid_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/fine_grid_search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roc_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/roc_evaluation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,21 +51,37 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.ArrangeData.executor": "Run",
+    "Python.Tuned_after_ROC_J.executor": "Run",
+    "Python.data_loading.executor": "Run",
     "Python.feature_extraction.executor": "Run",
     "Python.fine_grid_search.executor": "Run",
+    "Python.hyperparameters.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.model_training.executor": "Run",
+    "Python.model_tuning.executor": "Run",
+    "Python.roc_evaluation.executor": "Run",
+    "Python.tuned_models.executor": "Run",
+    "Python.visualize_data.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -125,7 +145,47 @@
       <option name="project" value="LOCAL" />
       <updated>1771950947293</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added hyperparameters.py.">
+      <option name="closed" value="true" />
+      <created>1772056076074</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1772056076074</updated>
+    </task>
+    <task id="LOCAL-00008" summary="WIP - implementing OvO strategy">
+      <option name="closed" value="true" />
+      <created>1772531258327</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1772531258327</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Changed data loading - now using nina-helper library to load data from data base!">
+      <option name="closed" value="true" />
+      <created>1772554345302</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1772554345302</updated>
+    </task>
+    <task id="LOCAL-00010" summary="hyper-parameter grid search">
+      <option name="closed" value="true" />
+      <created>1772916484990</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1772916484990</updated>
+    </task>
+    <task id="LOCAL-00011" summary="finished fine grid-search tuning for all kernels">
+      <option name="closed" value="true" />
+      <created>1773079509245</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1773079509246</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -146,6 +206,11 @@
     <MESSAGE value="Finished basic model training pipe-line" />
     <MESSAGE value="Added scoring metrics. need to check further." />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="Added hyperparameters.py." />
+    <MESSAGE value="WIP - implementing OvO strategy" />
+    <MESSAGE value="Changed data loading - now using nina-helper library to load data from data base!" />
+    <MESSAGE value="hyper-parameter grid search" />
+    <MESSAGE value="finished fine grid-search tuning for all kernels" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished fine grid-search tuning for all kernels" />
   </component>
 </project>

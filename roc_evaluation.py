@@ -85,6 +85,7 @@ def main():
     df_train_features = extract_all_features(df_train_raw)
     df_val_features = extract_all_features(df_val_raw)
 
+    #Removing the data that gives away the answer######
     columns_to_drop = ['Restimulus', 'Subject', 'dataset_type']
     X_train = df_train_features.drop(columns=columns_to_drop)
     y_train = df_train_features['Restimulus']
