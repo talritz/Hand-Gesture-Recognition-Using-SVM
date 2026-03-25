@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import hyperparameters as hp
+import hyper_parameters as hp
 import nina_helper
 
 

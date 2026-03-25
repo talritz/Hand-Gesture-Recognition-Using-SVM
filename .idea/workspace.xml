@@ -4,15 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="finished fine grid-search tuning for all kernels">
-      <change afterPath="$PROJECT_DIR$/Tuned_after_ROC_J.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuned_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ComEx2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ComEx2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Other Tests/PCA_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Other Tests/POC.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parameter tuning/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROC_J/Tuned_after_ROC_J.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROC_J/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROC_J/roc_optimizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base_model_training.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fine_grid_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/fine_grid_search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bdika" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/data_parameters_tuning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data-Sets/zubidubi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tuned_after_ROC_J.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROC_J/ROC_J_optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loading.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fine_grid_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/fine_grid_search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyperparameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_training.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roc_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/roc_evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_tuning.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/model_tuning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nina_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/nina_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roc_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROC_J/roc_evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subject_7_features.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuned_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuned_models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualize_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualize_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zubidubi" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,14 +75,21 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.ArrangeData.executor": "Run",
+    "Python.PCA_test.executor": "Run",
+    "Python.POC.executor": "Run",
     "Python.Tuned_after_ROC_J.executor": "Run",
+    "Python.base_model_training.executor": "Run",
+    "Python.class_seperation_test.executor": "Run",
     "Python.data_loading.executor": "Run",
+    "Python.data_parameters_tuning.executor": "Run",
     "Python.feature_extraction.executor": "Run",
     "Python.fine_grid_search.executor": "Run",
+    "Python.hyper_parameters.executor": "Run",
     "Python.hyperparameters.executor": "Run",
     "Python.main.executor": "Run",
     "Python.model_training.executor": "Run",
     "Python.model_tuning.executor": "Run",
+    "Python.nina_helper.executor": "Run",
     "Python.roc_evaluation.executor": "Run",
     "Python.tuned_models.executor": "Run",
     "Python.visualize_data.executor": "Run",
@@ -74,12 +98,22 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM"
+    "last_opened_file_path": "B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM/Parameter tuning",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\Parameter tuning" />
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\ROC AND J" />
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\Work Flow" />
       <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\ROC AND J" />
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\Other Tests" />
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM" />
+      <recent name="B:\OneDrive - Afeka College Of Engineering\Analogs Lab\Experiment 8\Hand-Gesture-Recognition-Using-SVM\Parameter tuning" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -185,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773079509246</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="ROC and J tuning">
+      <option name="closed" value="true" />
+      <created>1773410007719</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1773410007719</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,6 +253,7 @@
     <MESSAGE value="Changed data loading - now using nina-helper library to load data from data base!" />
     <MESSAGE value="hyper-parameter grid search" />
     <MESSAGE value="finished fine grid-search tuning for all kernels" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished fine grid-search tuning for all kernels" />
+    <MESSAGE value="ROC and J tuning" />
+    <option name="LAST_COMMIT_MESSAGE" value="ROC and J tuning" />
   </component>
 </project>

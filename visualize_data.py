@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import hyperparameters as hp
+import hyper_parameters as hp
 from data_loading import load_cleaned_ninapro_data
 
 

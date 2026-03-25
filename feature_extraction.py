@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import hyperparameters as hp
+import hyper_parameters as hp
 
 def calc_rms(emg_signals):
     return np.sqrt(np.mean(emg_signals ** 2, axis=0))
