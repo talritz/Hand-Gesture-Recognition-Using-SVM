@@ -4,32 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Other Tests/PCA_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Other Tests/POC.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parameter tuning/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROC_J/Tuned_after_ROC_J.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROC_J/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROC_J/roc_optimizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base_model_training.py" afterDir="false" />
+    <list default="true" id="c3057659-45bd-448e-a8b3-8f2c7de730fc" name="Changes" comment="Finalizing pipe-line">
+      <change afterPath="$PROJECT_DIR$/calculate_rest_precentage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/final_model_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grid_search/grid_search_main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grid_search/stage1_data_parameters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grid_search/stage2_model_parameters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grid_search/stage3_results_analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repetition_division.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bdika" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/data_parameters_tuning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data-Sets/zubidubi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tuned_after_ROC_J.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROC_J/ROC_J_optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Other Tests/PCA_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Other Tests/POC.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parameter tuning/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parameter tuning/data_parameters_tuning.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parameter tuning/fine_grid_search.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parameter tuning/model_tuning.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROC_J/ROC_J_optimization.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROC_J/Tuned_after_ROC_J.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROC_J/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROC_J/roc_evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROC_J/roc_optimizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_model_training.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loading.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fine_grid_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/fine_grid_search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hyperparameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyper_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_training.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_tuning.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parameter tuning/model_tuning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nina_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/nina_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roc_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROC_J/roc_evaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/subject_7_features.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuned_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuned_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/visualize_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualize_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zubidubi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nina_helper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuned_models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualize_data.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +61,9 @@
     &quot;accountId&quot;: &quot;e3b89a38-c29b-4e84-a3d9-d56f4ff6909c&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/data_loading.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -77,20 +83,32 @@
     "Python.ArrangeData.executor": "Run",
     "Python.PCA_test.executor": "Run",
     "Python.POC.executor": "Run",
+    "Python.POC_rep_division.executor": "Run",
     "Python.Tuned_after_ROC_J.executor": "Run",
+    "Python.analyze_results.executor": "Run",
     "Python.base_model_training.executor": "Run",
+    "Python.calculate_rest_precentage.executor": "Run",
     "Python.class_seperation_test.executor": "Run",
+    "Python.copy_relevant_data_files.executor": "Run",
     "Python.data_loading.executor": "Run",
     "Python.data_parameters_tuning.executor": "Run",
+    "Python.export_winners.executor": "Run",
     "Python.feature_extraction.executor": "Run",
+    "Python.final_model_test.executor": "Run",
     "Python.fine_grid_search.executor": "Run",
+    "Python.grid_search_main.executor": "Run",
     "Python.hyper_parameters.executor": "Run",
     "Python.hyperparameters.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.merge_csv.executor": "Run",
     "Python.model_training.executor": "Run",
     "Python.model_tuning.executor": "Run",
     "Python.nina_helper.executor": "Run",
+    "Python.pairwise_roc_optimizer.executor": "Run",
+    "Python.repetition_division.executor": "Run",
     "Python.roc_evaluation.executor": "Run",
+    "Python.sigmoid_grid_search.executor": "Run",
+    "Python.stage3_results_analysis.executor": "Run",
     "Python.tuned_models.executor": "Run",
     "Python.visualize_data.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -99,7 +117,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "B:/OneDrive - Afeka College Of Engineering/Analogs Lab/Experiment 8/Hand-Gesture-Recognition-Using-SVM/Parameter tuning",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -227,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773410007719</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Finalizing pipe-line">
+      <option name="closed" value="true" />
+      <created>1774439234830</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1774439234830</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +280,7 @@
     <MESSAGE value="hyper-parameter grid search" />
     <MESSAGE value="finished fine grid-search tuning for all kernels" />
     <MESSAGE value="ROC and J tuning" />
-    <option name="LAST_COMMIT_MESSAGE" value="ROC and J tuning" />
+    <MESSAGE value="Finalizing pipe-line" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalizing pipe-line" />
   </component>
 </project>

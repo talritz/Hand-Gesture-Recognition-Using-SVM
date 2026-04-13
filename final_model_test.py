@@ -1,10 +1,10 @@
 """
 ===============================================================================
-Main Pipeline Execution Script
+Final Test Set Evaluation Script
 ===============================================================================
-Orchestrates the end-to-end execution of the project.
-Manages data extraction, dynamic preprocessing configurations, model training,
-and aggregates all analytical outputs and visualizations into structured directories.
+Executes the final validation assessment in the pipeline sequence.
+Maintains data sanctity by strictly mapping the underlying feature weights
+to Subjects 1-8, evaluating performance entirely on the isolated testing set.
 """
 
 import os
@@ -19,34 +19,29 @@ from data_loading import load_cleaned_ninapro_data
 from feature_extraction import extract_all_features
 from model_training import evaluate_single_kernel_ovo
 from roc_optimizer import optimize_and_evaluate_pairwise
-from roc_optimizer import plot_subset_roc
+from roc_optimizer import plot_subset_roc_for_report
 import hyper_parameters as hp
 
-# Enable Intel Extension for Scikit-learn to accelerate SVM computations.
+# Enable Intel Scikit-learn framework optimizations.
 from sklearnex import patch_sklearn
 patch_sklearn()
 
-
 def plot_cm_with_modules(y_true, y_pred, class_labels, kernel_name, stage, normalize_cm, output_dir):
     """
-    Renders and exports the Confusion Matrix.
-    Applies a fixed colormap scale (0-100) when normalized to ensure
-    visual comparability across different models and configurations.
+    Renders and exports the final evaluation Confusion Matrix.
+    Applies fixed colormap boundaries for accurate visual comparisons.
     """
     if normalize_cm:
         cm = confusion_matrix(y_true, y_pred, labels=class_labels, normalize='true') * 100
         val_format = '.1f'
         norm_txt = "(%)"
-        # Enforce global 0-100 scale for normalized representations.
         scale_args = {'im_kw': {'vmin': 0, 'vmax': 100}}
     else:
         cm = confusion_matrix(y_true, y_pred, labels=class_labels)
         val_format = 'd'
         norm_txt = "(Counts)"
-        # Permit dynamic scaling for absolute count representations.
         scale_args = {}
 
-    # Compile the active module strings for chart title annotation.
     active_modules = []
     if hp.USE_UNDERSAMPLING: active_modules.append("Undersampling")
     if hp.USE_PCA: active_modules.append("PCA")
@@ -58,10 +53,10 @@ def plot_cm_with_modules(y_true, y_pred, class_labels, kernel_name, stage, norma
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_labels)
     disp.plot(cmap=plt.cm.Blues, values_format=val_format, ax=plt.gca(), **scale_args)
 
-    plt.title(f"{kernel_name.upper()} Kernel - {stage} {norm_txt}\n[Modules: {modules_str}]",
+    plt.title(f"TEST SET: {kernel_name.upper()} Kernel - {stage} {norm_txt}\n[Modules: {modules_str}]",
               fontsize=12, fontweight='bold')
 
-    filename = os.path.join(output_dir, f"CM_{stage.replace(' ', '')}_{kernel_name.upper()}.png")
+    filename = os.path.join(output_dir, f"CM_TEST_{stage.replace(' ', '')}_{kernel_name.upper()}.png")
     plt.savefig(filename, bbox_inches='tight')
     plt.clf()
     plt.close()
@@ -70,10 +65,7 @@ def plot_cm_with_modules(y_true, y_pred, class_labels, kernel_name, stage, norma
 
 
 def main():
-    # =========================================================================
-    # PHASE 1: Environment Setup & Configuration
-    # =========================================================================
-    # Dynamically resolve dataset paths based on local environment variables.
+    # Resolve directory paths for execution environment robustness.
     paths_to_check = [
         r'C:\Users\Tal\OneDrive - Afeka College Of Engineering\הקבצים של Nadav Matza - פרויקט גמר\עיבוד אותות אקראיים\data sets',
         r'B:\OneDrive - Afeka College Of Engineering\פרויקט גמר\עיבוד אותות אקראיים\data sets',
@@ -85,32 +77,28 @@ def main():
         print("Error: Dataset path not found. Please verify your directories.")
         return
 
-    # Define training and validation subject pools.
+    # Final split definition enforcing model isolation boundaries.
     train_subjects = [1, 2, 3, 4, 5, 6, 7, 8]
-    val_subjects = [9, 10, 11, 12]
+    test_subjects = [17, 18, 19, 20]
 
-    # Construct execution specific directory nomenclature based on active flags.
+    # Map output locations dynamically via control flags.
     active_flags = []
     if hp.USE_YOUDENS_J: active_flags.append("J")
     if hp.USE_PCA: active_flags.append("PCA")
     if hp.USE_UNDERSAMPLING: active_flags.append("US")
 
     config_name = "_".join(active_flags) if active_flags else "Base"
-    output_dir = f"Results_{config_name}"
+    output_dir = f"Results_Final_TestSet_{config_name}"
     os.makedirs(output_dir, exist_ok=True)
 
     print("=" * 80)
-    print(f" PIPELINE INITIALIZED | Active Configuration: {config_name}")
+    print(f" FINAL TEST EVALUATION INITIALIZED | Active Configuration: {config_name}")
     print("=" * 80)
 
     all_results = []
 
-    # =========================================================================
-    # PHASE 2: Kernel Execution Loop
-    # =========================================================================
+    # Iteration mapping per valid kernel structure.
     for kernel, model_params in hp.MODEL_PARAMS.items():
-
-        # Retrieve kernel-specific temporal parameters determined during Grid Search.
         data_cfg = hp.MODEL_DATA_CONFIG[kernel]
         hp.MARGIN_SAMPLES = data_cfg['margin']
         hp.WINDOW_SIZE = data_cfg['window']
@@ -119,97 +107,80 @@ def main():
         hp.SSC_DELTA = data_cfg['ssc']
 
         print("\n\n" + "*" * 70)
-        print(f" STARTING EXPERIMENTS FOR: {kernel.upper()} KERNEL")
+        print(f" STARTING TEST EXPERIMENTS FOR: {kernel.upper()} KERNEL")
         print("*" * 70)
 
-        # Execute data loading and feature extraction.
-        print("\n[+] LOADING DATA & EXTRACTING FEATURES (Train, Val)...")
+        print("\n[+] LOADING DATA & EXTRACTING FEATURES (Train, Test)...")
         train_data_raw = load_cleaned_ninapro_data(base_path, train_subjects, 'Train')
-        val_data_raw = load_cleaned_ninapro_data(base_path, val_subjects, 'Validation')
+        test_data_raw = load_cleaned_ninapro_data(base_path, test_subjects, 'Test')
 
         df_train_features = extract_all_features(train_data_raw)
-        df_val_features = extract_all_features(val_data_raw)
+        df_test_features = extract_all_features(test_data_raw)
 
         columns_to_drop = ['Restimulus', 'Subject', 'dataset_type']
         class_labels = sorted(df_train_features['Restimulus'].unique())
 
-        # =========================================================================
-        # PHASE 3: Preprocessing
-        # =========================================================================
-        # Apply dataset balancing algorithms.
         if hp.USE_UNDERSAMPLING:
             df_train_features = hp.undersample_rest_class(df_train_features)
 
         X_train = df_train_features.drop(columns=columns_to_drop)
         y_train = df_train_features['Restimulus']
-        X_val = df_val_features.drop(columns=columns_to_drop)
-        y_val = df_val_features['Restimulus']
+        X_test = df_test_features.drop(columns=columns_to_drop)
+        y_test = df_test_features['Restimulus']
 
-        # Apply standard scaling. Strict adherence to fitting ONLY on the training distribution.
+        # Enforce transformation metrics strictly onto the evaluation subjects.
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
-        X_val_scaled = scaler.transform(X_val)
+        X_test_scaled = scaler.transform(X_test)
 
-        # Apply Principal Component Analysis (Dimensionality Reduction).
         if hp.USE_PCA:
             print(f"Applying PCA (Variance Threshold: {hp.PCA_VARIANCE_THRESHOLD})...")
             pca = PCA(n_components=hp.PCA_VARIANCE_THRESHOLD, random_state=42)
             X_train_scaled = pca.fit_transform(X_train_scaled)
-            X_val_scaled = pca.transform(X_val_scaled)
+            X_test_scaled = pca.transform(X_test_scaled)
 
-        # =========================================================================
-        # PHASE 4: Baseline Model Training
-        # =========================================================================
-        # Train base classifiers and evaluate standard metrics.
-        baseline_res, trained_ovo_model, trained_ova_model, y_val_pred = evaluate_single_kernel_ovo(
-            kernel, model_params, X_train_scaled, y_train, X_val_scaled, y_val, class_labels
+        # Base classifier processing phase over evaluation test subjects.
+        baseline_res, trained_ovo_model, trained_ova_model, y_test_pred = evaluate_single_kernel_ovo(
+            kernel, model_params, X_train_scaled, y_train, X_test_scaled, y_test, class_labels
         )
 
-        plot_cm_with_modules(y_val, y_val_pred, class_labels, kernel, "Baseline", hp.NORMALIZE_CM, output_dir)
+        plot_cm_with_modules(y_test, y_test_pred, class_labels, kernel, "Baseline", hp.NORMALIZE_CM, output_dir)
 
-        run_result = {'Kernel': kernel.upper(), 'Config': config_name}
+        run_result = {'Kernel': kernel.upper(), 'Config': f"{config_name}_TestSet"}
         run_result.update(baseline_res)
 
-        # =========================================================================
-        # PHASE 5: Advanced Optimization (Youden's J + Tie-Breaking)
-        # =========================================================================
-        # Apply the threshold optimizer mechanism.
+        # Advanced evaluation optimization application mapping.
         if hp.USE_YOUDENS_J:
-            opt_metrics, y_val_pred_custom = optimize_and_evaluate_pairwise(
-                trained_ovo_model, trained_ova_model, X_val_scaled, y_val, class_labels, kernel
+            opt_metrics, y_test_pred_custom = optimize_and_evaluate_pairwise(
+                trained_ovo_model, trained_ova_model, X_test_scaled, y_test, class_labels, kernel
             )
 
-            plot_cm_with_modules(y_val, y_val_pred_custom, class_labels, kernel, "Pairwise Opt", hp.NORMALIZE_CM,
+            plot_cm_with_modules(y_test, y_test_pred_custom, class_labels, kernel, "Pairwise Opt", hp.NORMALIZE_CM,
                                  output_dir)
             run_result.update(opt_metrics)
 
-            plot_subset_roc(
-                trained_ovo_model, X_val_scaled, y_val, target_class=1, kernel_name=kernel, output_dir=output_dir
+            plot_subset_roc_for_report(
+                trained_ovo_model, X_test_scaled, y_test, target_class=1, kernel_name=kernel, output_dir=output_dir
             )
 
         all_results.append(run_result)
 
-    # =========================================================================
-    # PHASE 6: Results Aggregation & CSV Export
-    # =========================================================================
     final_df = pd.DataFrame(all_results)
-
-    # Structure resulting columns logically for export mapping.
     cols = ['Kernel', 'Config'] + [c for c in final_df.columns if c not in ['Kernel', 'Config']]
     final_df = final_df[cols]
     final_df.dropna(axis=1, how='all', inplace=True)
 
-    csv_path = os.path.join(output_dir, f"Summary_{config_name}.csv")
+    csv_path = os.path.join(output_dir, f"Summary_TestSet_{config_name}.csv")
     final_df.to_csv(csv_path, index=False)
 
     print("\n\n" + "=" * 100)
-    print(f" FINAL RESULTS: {config_name} ")
+    print(f" FINAL TEST SET EXPERIMENT RESULTS: {config_name} ")
     print("=" * 100)
     print(final_df.to_string(index=False))
     print("=" * 100)
 
-    print(f"\n[+] Saved complete run data to: {csv_path}")
-    print(f"[+] Saved all Confusion Matrices into: {output_dir}/")
+    print(f"\n[+] Saved complete Test Set run data to: {csv_path}")
+    print(f"[+] Saved all Test Set Confusion Matrices into: {output_dir}/")
 
 
 if __name__ == "__main__":
